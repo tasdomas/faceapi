@@ -79,7 +79,7 @@ func (t *TSuite) TestValidPostRequest(c *C) {
 	c.Assert(w.Body.String(), Equals, "{\"Objects\":[{\"A\":{\"X\":214,\"Y\":201},\"B\":{\"X\":390,\"Y\":377}}]}\n")
 }
 
-func (t *TSuite) BenchmarkDetection(c *C) {
+func (t *TSuite) BenchmarkHandlerDetection(c *C) {
 	w := httptest.NewRecorder()
 
 	for i := 0; i < c.N; i++ {

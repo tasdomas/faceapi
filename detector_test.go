@@ -55,3 +55,16 @@ func (t *TSuite) TestImageFile(c *C) {
 	c.Assert(result.Objects, HasLen, 1)
 	c.Assert(err, IsNil)
 }
+
+// Benchmark detection on image file..
+func (t *TSuite) BenchmarkDetection(c *C) {
+	detector, err := faceapi.NewDetector(HAAR_CASCADE_FILE)
+	c.Assert(detector, NotNil)
+	c.Assert(err, IsNil)
+
+	c.ResetTimer()
+	for i := 0; i < c.N; i++ {
+		_, err := detector.FindInFile(IMAGE_FILE)
+		c.Assert(err, IsNil)
+	}
+}
