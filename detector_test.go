@@ -13,6 +13,11 @@ func Test(t *testing.T) {
 
 type TSuite struct{}
 
+const (
+	HAAR_CASCADE_FILE = "data/haarcascade_frontalface_alt.xml"
+	IMAGE_FILE        = "data/lena.jpg"
+)
+
 var _ = Suite(&TSuite{})
 
 // Test initializing detector with non-existant file fails.
@@ -24,14 +29,14 @@ func (t *TSuite) TestNonExistantFile(c *C) {
 
 // Test detector initialization.
 func (t *TSuite) TestDetectorInit(c *C) {
-	detector, err := faceapi.NewDetector("haarcascade_frontalface_alt.xml")
+	detector, err := faceapi.NewDetector(HAAR_CASCADE_FILE)
 	c.Assert(detector, NotNil)
 	c.Assert(err, IsNil)
 }
 
 // Test detector fails when image file does not exist.
 func (t *TSuite) TestNoImage(c *C) {
-	detector, err := faceapi.NewDetector("haarcascade_frontalface_alt.xml")
+	detector, err := faceapi.NewDetector(HAAR_CASCADE_FILE)
 	c.Assert(detector, NotNil)
 	c.Assert(err, IsNil)
 
@@ -42,11 +47,11 @@ func (t *TSuite) TestNoImage(c *C) {
 
 // Test detection on image file.
 func (t *TSuite) TestImageFile(c *C) {
-	detector, err := faceapi.NewDetector("haarcascade_frontalface_alt.xml")
+	detector, err := faceapi.NewDetector(HAAR_CASCADE_FILE)
 	c.Assert(detector, NotNil)
 	c.Assert(err, IsNil)
 
-	result, err := detector.FindInFile("lena.jpg")
+	result, err := detector.FindInFile(IMAGE_FILE)
 	c.Assert(result.Objects, HasLen, 1)
 	c.Assert(err, IsNil)
 }
